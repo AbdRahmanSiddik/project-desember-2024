@@ -50,7 +50,7 @@ class ProfileController extends Controller
 
         Profile::create($data);
 
-        return redirect()->route('admin.profiles.index')->with('success', 'Profile created successfully.');
+        return redirect()->route('profile.index')->with('success', 'Profile created successfully.');
     }
 
     public function show(Profile $profile)
@@ -95,12 +95,12 @@ class ProfileController extends Controller
 
         $profile->update($data);
 
-        return redirect()->route('admin.profiles.index')->with('success', 'Profile updated successfully.');
+        return redirect()->route('profile.index')->with('success', 'Profile updated successfully.');
     }
 
     public function destroy(Profile $profile)
     {
         $profile->delete();
-        return redirect()->route('admin.profiles.index')->with('success', 'Profile deleted successfully.');
+        return redirect()->route('profile.index')->with('success', 'Profile deleted successfully.');
     }
 }

@@ -93,11 +93,33 @@
                       <td class="text-center">
                         <div class="d-flex justify-content-center gap-2">
                           <button type="submit" class="btn btn-primary shadow btn-xs sharp" data-bs-toggle="modal" data-bs-target="#exampleModalLong{{ $item->token_kategori }}"><i class="fas fa-pencil-alt"></i></button>
-                          <a href="javascript:void(0)" class="btn btn-danger shadow btn-xs sharp"><i
-                              class="fas fa-trash-alt"></i></a>
+                          <button type="button" class="btn btn-danger shadow btn-xs sharp" data-bs-toggle="modal" data-bs-target="#basicModal{{ $item->token_kategori }}"><i
+                              class="fas fa-trash-alt"></i></button>
                         </div>
                       </td>
                     </tr>
+
+                    <!-- Modal delete -->
+                    <div class="modal fade" id="basicModal{{ $item->token_kategori }}">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Hapus {{ $item->nama_kategori }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                    </button>
+                                </div>
+                                <div class="modal-body">Modal body text goes here.</div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+                                    <form action="{{ route('kategori.destroy', $item->token_kategori) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="modal fade" id="exampleModalLong{{ $item->token_kategori }}">
                         <div class="modal-dialog">
@@ -167,4 +189,5 @@
       </div>
     </div>
   </div>
+  <x-part.alert></x-part.alert>
 </x-admin>

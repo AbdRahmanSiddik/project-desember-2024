@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\KategoriController;
+use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\Auth\SessionController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,14 @@ Route::middleware(['auth','verified','role:admin'])->group(function(){
     Route::put('/kategori/{kategori}', [KategoriController::class, 'update'])->name('kategori.update');
     Route::delete('/kategori/{kategori}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
 
+    // bagian profile cabang
+    Route::get('/profile',[ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/create',[ProfileController::class, 'create'])->name('profile.create');
+    Route::post('/profile',[ProfileController::class, 'store'])->name('profile.store');
+    Route::get('/profile/{profile}',[ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/{profile}/edit',[ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/{profile}',[ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile/{profile}',[ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 
