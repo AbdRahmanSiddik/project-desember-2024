@@ -27,13 +27,13 @@ class KategoriController extends Controller
             'deskripsi' => $request->deskripsi
         ]);
 
-        return redirect()->route('admin.kategori.index')
+        return redirect()->route('kategori.index')
                          ->with('success', 'Kategori created successfully.');
     }
 
     public function show(Kategori $kategori)
     {
-        return view('admin.kategori.show', compact('kategori'));
+        return view('kategori.show', compact('kategori'));
     }
 
     public function update(KategoriRequest $request, Kategori $kategori)
@@ -47,7 +47,7 @@ class KategoriController extends Controller
             'deskripsi' => $request->deskripsi
         ]);
 
-        return redirect()->route('admin.kategori.index')
+        return redirect()->route('kategori.index')
                          ->with('success', 'Kategori updated successfully.');
     }
 
@@ -55,7 +55,7 @@ class KategoriController extends Controller
     {
         $kategori->delete();
 
-        return redirect()->route('admin.kategori.index')
+        return redirect()->route('kategori.index')
                          ->with('success', 'Kategori deleted successfully.');
     }
 }

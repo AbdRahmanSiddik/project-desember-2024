@@ -10,33 +10,52 @@
           <span class="nav-text">Dashboard</span>
         </a>
       </li>
+      @if (auth()->user()->role == 'teller')
+        <li class="px-4 pt-4 mt-4 border-top border-primary">
+          <h4 class="fw-bold nav-text">Service</h4>
+        </li>
+        <li>
+          <a href="/rekening" aria-expanded="false">
+            <i class="flaticon-381-notepad"></i>
+            <span class="nav-text">Rekening</span>
+          </a>
+        </li>
+        <li>
+          <a href="/tabungan" aria-expanded="false">
+            <i class="flaticon-381-layer-1"></i>
+            <span class="nav-text">Tabungan</span>
+          </a>
+        </li>
+        <li>
+          <a href="/tabungan" aria-expanded="false">
+            <i class="flaticon-381-network"></i>
+            <span class="nav-text">Pinjaman</span>
+          </a>
+        </li>
+        <li>
+          <a href="/tabungan" aria-expanded="false">
+            <i class="flaticon-381-television"></i>
+            <span class="nav-text">Gadai</span>
+          </a>
+        </li>
+      @elseif (auth()->user()->role == 'admin')
       <li class="px-4 pt-4 mt-4 border-top border-primary">
-        <h4 class="fw-bold nav-text">Service</h4>
+        <h4 class="fw-bold nav-text">Menu</h4>
       </li>
       <li>
-        <a href="/rekening" aria-expanded="false">
+        <a href="/kategori" aria-expanded="false">
           <i class="flaticon-381-notepad"></i>
-          <span class="nav-text">Rekening</span>
+          <span class="nav-text">Jenis Simpanan</span>
         </a>
       </li>
       <li>
-        <a href="/tabungan" aria-expanded="false">
-          <i class="flaticon-381-layer-1"></i>
-          <span class="nav-text">Tabungan</span>
-        </a>
-      </li>
-      <li>
-        <a href="/tabungan" aria-expanded="false">
+        <a href="/profile" aria-expanded="false">
           <i class="flaticon-381-network"></i>
-          <span class="nav-text">Pinjaman</span>
+          <span class="nav-text">Cabang</span>
         </a>
       </li>
-      <li>
-        <a href="/tabungan" aria-expanded="false">
-          <i class="flaticon-381-television"></i>
-          <span class="nav-text">Gadai</span>
-        </a>
-      </li>
+      @endif
+
       <li class="px-4 pt-4 mt-4 border-top border-primary">
         <h4 class="fw-bold nav-text">Settings</h4>
       </li>
@@ -47,7 +66,7 @@
         </a>
       </li>
       <li>
-        <a href="/tabungan" aria-expanded="false">
+        <a href="{{ route('logout') }}" id="Logout" aria-expanded="false">
           <i class="fa-regular fa-arrow-right-to-bracket fw-bold"></i>
           <span class="nav-text">Logout</span>
         </a>

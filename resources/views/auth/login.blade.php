@@ -28,7 +28,7 @@
     <div class="login-account">
 		<div class="row h-100">
 			<div class="col-lg-6 align-self-start">
-				<div class="account-info-area" style="background-image: url(images/rainbow.gif)">
+				<div class="account-info-area" style="background-image: url({{ asset('assets') }}/images/rainbow.gif)">
 					<div class="login-content">
 						<p class="sub-title">Log in to your admin dashboard with your credentials</p>
 						<h1 class="title">The Evolution of <span>Mophy</span></h1>

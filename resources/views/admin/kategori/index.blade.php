@@ -20,36 +20,42 @@
               <div class="offcanvas-body">
                 <form class="form-valide-with-icon needs-validation" novalidate method="POST"
                   action="{{ route('kategori.store') }}">
+                  @csrf
                   <div class="mb-3 vertical-radius">
                     <label class="text-label form-label required" for="nama_kategori">Nama Kategori</label>
                     <div class="input-group validate-username">
                       <span class="input-group-text search_icon"> <i class="fa fa-user"></i>
                       </span>
-                      <input type="text" class="form-control br-style" id="nama_kategori"
-                        placeholder="Masukkan nama kategori.." required>
+                      <input type="text" class="form-control br-style @error('nama_kategori') is-invalid @enderror"
+                        id="nama_kategori" placeholder="Masukkan nama kategori.." required name="nama_kategori">
                       <div class="invalid-feedback">
-                        Please Enter a username.
+                        @error('nama_kategori')
+                          {{ $message }}
+                        @enderror
                       </div>
                     </div>
                   </div>
                   <div class="mb-3 vertical-radius">
-                    <label class="text-label form-label required" for="biaya`">Biaya</label>
+                    <label class="text-label form-label required" for="biaya">Biaya</label>
                     <div class="input-group validate-username">
-                      <input type="number" class="form-control text-end" id="biaya`"
-                        placeholder="Ex: 0,3" required pattern="\d*\.?\d+" inputmode="numeric">
+                      <input type="number" class="form-control text-end @error('biaya') is-invalid @enderror"
+                        id="biaya" name="biaya" placeholder="Ex: 0,3" step="0.01" required>
                       <span class="input-group-text search_icon br-style"> %</i>
                       </span>
                       <div class="invalid-feedback">
-                        Please Enter a username.
+                        @error('biaya')
+                          {{ $message }}
+                        @enderror
                       </div>
                     </div>
                   </div>
                   <div class="mb-3 vertical-radius">
                     <label class="text-label form-label required" for="deskripsi">Deskripsi</label>
                     <div class="input-group validate-username">
-                      <textarea name="deskripsi" id="deskripsi" cols="100%" rows="10" class="form-control" placeholder="Masukkan Deskripsi"></textarea>
+                      <textarea name="deskripsi" id="deskripsi" cols="100%" rows="10" class="form-control"
+                        placeholder="Masukkan Deskripsi..."></textarea>
                       <div class="invalid-feedback">
-                        Please Enter a username.
+                        Salah
                       </div>
                     </div>
                   </div>
@@ -85,14 +91,73 @@
                         @percentage($item->biaya)
                       </td>
                       <td class="text-center">
-                        <div class="d-flex justify-content-center">
-                          <a href="javascript:void(0);" class="btn btn-primary shadow btn-xs sharp me-1"><i
-                              class="fas fa-pencil-alt"></i></a>
-                          <a href="javascript:void(0);" class="btn btn-danger shadow btn-xs sharp"><i
+                        <div class="d-flex justify-content-center gap-2">
+                          <button type="submit" class="btn btn-primary shadow btn-xs sharp" data-bs-toggle="modal" data-bs-target="#exampleModalLong{{ $item->token_kategori }}"><i class="fas fa-pencil-alt"></i></button>
+                          <a href="javascript:void(0)" class="btn btn-danger shadow btn-xs sharp"><i
                               class="fas fa-trash-alt"></i></a>
                         </div>
                       </td>
                     </tr>
+
+                    <div class="modal fade" id="exampleModalLong{{ $item->token_kategori }}">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Form Edit Kategori {{ $item->nama_kategori }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                    </button>
+                                </div>
+                                <form action="{{ route('kategori.update', $item->token_kategori) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="modal-body">
+                                        <div class="mb-3 vertical-radius">
+                                            <label class="text-label form-label required" for="nama_kategori">Nama Kategori</label>
+                                            <div class="input-group validate-username">
+                                              <span class="input-group-text search_icon"> <i class="fa fa-user"></i>
+                                              </span>
+                                              <input type="text" class="form-control br-style @error('nama_kategori') is-invalid @enderror"
+                                                id="nama_kategori" placeholder="Masukkan nama kategori.." required name="nama_kategori" value="{{ $item->nama_kategori }}">
+                                              <div class="invalid-feedback">
+                                                @error('nama_kategori')
+                                                  {{ $message }}
+                                                @enderror
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="mb-3 vertical-radius">
+                                            <label class="text-label form-label required" for="biaya">Biaya</label>
+                                            <div class="input-group validate-username">
+                                              <input type="number" class="form-control text-end @error('biaya') is-invalid @enderror"
+                                                id="biaya" name="biaya" placeholder="Ex: 0,3" step="0.01" required value="{{ $item->biaya }}">
+                                              <span class="input-group-text search_icon br-style"> %</i>
+                                              </span>
+                                              <div class="invalid-feedback">
+                                                @error('biaya')
+                                                  {{ $message }}
+                                                @enderror
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="mb-3 vertical-radius">
+                                            <label class="text-label form-label required" for="deskripsi">Deskripsi</label>
+                                            <div class="input-group validate-username">
+                                              <textarea name="deskripsi" id="deskripsi" cols="100%" rows="10" class="form-control"
+                                                placeholder="Masukkan Deskripsi...">{{ $item->deskripsi }}</textarea>
+                                              <div class="invalid-feedback">
+                                                Salah
+                                              </div>
+                                            </div>
+                                          </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                   @endforeach
                 </tbody>
               </table>

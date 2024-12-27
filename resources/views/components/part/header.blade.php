@@ -121,10 +121,10 @@
             </a>
           </li>
           <li class="nav-item dropdown header-profile">
-            <a class="nav-link" href="javascript:void(0)" role="button" data-bs-toggle="dropdown">
+            <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
               <div class="header-info">
-                <span class="text-black"><strong>Ucup</strong></span>
-                <p class="fs-12 mb-0">Anggota</p>
+                <span class="text-black"><strong>{{ auth()->user()->name }}</strong></span>
+                <p class="fs-12 mb-0">{{ auth()->user()->role }}</p>
               </div>
               <img src="{{ asset('assets') }}/images/profile/17.jpg" width="20" alt="">
             </a>
