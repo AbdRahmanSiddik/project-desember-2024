@@ -11,7 +11,7 @@ class ProfileRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,14 +21,20 @@ class ProfileRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'no_profile' => 'required|string|size:4',
-            'logo' => 'required|image|mimes:png|max:1024',
-            'logo_text' => 'required|image|mimes:png|max:1024',
             'nama_profile' => 'required|string|max:100',
             'alamat' => 'required|string',
             'deskripsi' => 'required|string',
+            'tanggal_berdiri' => 'required',
         ];
+
+        if ($this->isMethod('post')) {
+            $rules['logo'] = 'nullable|image|mimes:png|max:1024';
+            $rules['logo_text'] = 'nullable|image|mimes:png|max:1024';
+        }
+
+        return $rules;
     }
 
     public function messages(): array
@@ -52,6 +58,7 @@ class ProfileRequest extends FormRequest
             'alamat.string' => 'Alamat harus berupa string.',
             'deskripsi.required' => 'Deskripsi wajib diisi.',
             'deskripsi.string' => 'Deskripsi harus berupa string.',
+            'tanggal_berdiri.required' => 'Tanggal berdiri wajib diisi.',
         ];
     }
 }

@@ -1,4 +1,5 @@
 <x-admin>
+    <x-slot:title>@ucfirst(auth()->user()->role) | Kategori : {{ auth()->user()->name }}</x-slot:title>
   <div class="container-fluid">
     <div class="form-head mb-4">
       <h2 class="text-black font-w600">Kategori</h2>

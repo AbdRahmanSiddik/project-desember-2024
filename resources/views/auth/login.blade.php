@@ -3,7 +3,7 @@
 
 <head>
    <!--Title-->
-	<title>Mophy - Payment Admin Dashboard Bootstrap Template + FrontEnd | DexignZone</title>
+	<title>Login</title>
 
 	<!-- Meta -->
 	<meta charset="utf-8">

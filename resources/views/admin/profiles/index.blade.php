@@ -1,4 +1,5 @@
 <x-admin>
+  <x-slot:title>@ucfirst(auth()->user()->role) | Profile : {{ auth()->user()->name }}</x-slot:title>
   <div class="container-fluid">
     <div class="form-head mb-4">
       <h2 class="text-black font-w600">Kantor Cabang</h2>
@@ -8,8 +9,8 @@
         <div class="card">
           <div class="card-header border-bottom border-primary">
             <h4 class="card-title">List Kantor</h4>
-            <a href="{{ route('') }}" class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-              aria-controls="offcanvasRight"><i class="fa-sharp fa-regular fa-plus fw-bold"></i> Tambah
+            <a href="{{ route('profile.create') }}" class="btn btn-primary"><i
+                class="fa-sharp fa-regular fa-plus fw-bold"></i> Tambah
               Kantor</a>
           </div>
           <div class="card-body">
@@ -21,54 +22,60 @@
                     <th>Nama Kantor</th>
                     <th>Kode</th>
                     <th>Alamat</th>
-                    <th class="text-center">Action</th>
+                    <th>Tanggal</th>
+                    <th class="text-start">Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($kategoris as $item)
+                  @foreach ($profiles as $item)
                     <tr>
                       <td class="text-center">
                         <strong>{{ $loop->iteration }}</strong>
                       </td>
                       <td>
-                        {{ $item->nama_kategori }}
+                        {{ $item->nama_profile }}
                       </td>
                       <td>
-                        @percentage($item->biaya)
+                        {{ $item->no_profile }}
                       </td>
-                      <td class="text-center">
-                        <div class="d-flex justify-content-center gap-2">
-                          <button type="submit" class="btn btn-primary shadow btn-xs sharp" data-bs-toggle="modal"
-                            data-bs-target="#exampleModalLong{{ $item->token_kategori }}"><i
-                              class="fas fa-pencil-alt"></i></button>
+                      <td>
+                        {{ $item->alamat }}
+                      </td>
+                      <td>
+                        {{ $item->created_at->format('d F Y') }}
+                      </td>
+                      <td class="text-start">
+                        <div class="d-flex justify-content-start gap-2">
+                          <a href="{{ route('profile.edit', $item->token_profile) }}" class="btn btn-primary shadow btn-xs sharp"><i
+                              class="fas fa-pencil-alt"></i></a>
                           <button type="button" class="btn btn-danger shadow btn-xs sharp" data-bs-toggle="modal"
-                            data-bs-target="#basicModal{{ $item->token_kategori }}"><i
+                            data-bs-target="#basicModal{{ $item->token_profile }}"><i
                               class="fas fa-trash-alt"></i></button>
                         </div>
                       </td>
                     </tr>
 
                     <!-- Modal delete -->
-                    {{-- <div class="modal fade" id="basicModal{{ $item->token_kategori }}">
-                              <div class="modal-dialog" role="document">
-                                  <div class="modal-content">
-                                      <div class="modal-header">
-                                          <h5 class="modal-title">Hapus {{ $item->nama_kategori }}</h5>
-                                          <button type="button" class="btn-close" data-bs-dismiss="modal">
-                                          </button>
-                                      </div>
-                                      <div class="modal-body">Modal body text goes here.</div>
-                                      <div class="modal-footer">
-                                          <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
-                                          <form action="{{ route('kategori.destroy', $item->token_kategori) }}" method="POST">
-                                              @csrf
-                                              @method('DELETE')
-                                              <button type="submit" class="btn btn-primary">Save changes</button>
-                                          </form>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div> --}}
+                    <div class="modal fade" id="basicModal{{ $item->token_profile }}">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Hapus {{ $item->nama_profile }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal">
+                            </button>
+                          </div>
+                          <div class="modal-body">Modal body text goes here.</div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+                            <form action="{{ route('profile.destroy', $item->token_profile) }}" method="POST">
+                              @csrf
+                              @method('DELETE')
+                              <button type="submit" class="btn btn-primary">Save changes</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   @endforeach
                 </tbody>
               </table>
@@ -78,4 +85,6 @@
       </div>
     </div>
   </div>
+
+  <x-part.alert></x-part.alert>
 </x-admin>

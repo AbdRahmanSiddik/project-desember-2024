@@ -12,7 +12,7 @@ class Profile extends Model
     protected $table = 'profiles';
     protected $primaryKey = 'token_profile';
     protected $keyType = 'string';
-    protected $guarded = ['id_profile', 'created_at', 'updated_at'];
+    protected $guarded = ['id_profile', 'updated_at'];
 
     public function getRouteKeyName()
     {

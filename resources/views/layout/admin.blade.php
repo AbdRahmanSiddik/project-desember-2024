@@ -3,7 +3,7 @@
 
 <head>
   <!--Title-->
-  <title>Mophy - Payment Admin Dashboard Bootstrap Template + FrontEnd | DexignZone</title>
+  <title>{{ $title }}</title>
 
   <!-- Meta -->
   <meta charset="utf-8">
@@ -12,7 +12,7 @@
   <!-- MOBILE SPECIFIC -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta name="csrf-token" content="{{ csrf_token() }}">
+  {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
 
   <!-- Favicon icon -->
   <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets') }}/images/favicon.png">
@@ -20,7 +20,7 @@
   <link href="{{ asset('assets') }}/vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{{ asset('assets') }}/vendor/chartist/css/chartist.min.css">
 
-  {{-- <link href="{{ asset('assets') }}/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">  --}}
+  <link href="{{ asset('assets') }}/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
 
   <!-- Datatable -->
   <link href="{{ asset('assets') }}/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -29,6 +29,16 @@
   <link href="{{ asset('assets') }}/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
   <link href="{{ asset('assets') }}/vendor/owl-carousel/owl.carousel.css" rel="stylesheet">
   <link class="main-css" href="{{ asset('assets') }}/css/style.css" rel="stylesheet">
+
+  <!-- Daterange picker -->
+	<link href="{{ asset('assets') }}/vendor/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+	<!-- Clockpicker -->
+	<link href="{{ asset('assets') }}/vendor/clockpicker/css/bootstrap-clockpicker.min.css" rel="stylesheet">
+	<!-- Material color picker -->
+	<link href="{{ asset('assets') }}/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
+	<!-- Pick date -->
+	<link rel="stylesheet" href="{{ asset('assets') }}/vendor/pickadate/themes/default.css">
+	<link rel="stylesheet" href="{{ asset('assets') }}/vendor/pickadate/themes/default.date.css">
 
   <style>
     /* Hides the spinner controls in Chrome, Safari, Edge, and Opera */
@@ -72,9 +82,9 @@
         ***********************************-->
     <div class="nav-header">
       <a href="index.html" class="brand-logo">
-        <img class="logo-abbr" src="{{ asset('assets') }}/images/logo-k.png" alt="">
-        <img class="logo-compact" src="{{ asset('assets') }}/images/logo-k-text.png" alt="">
-        <img class="brand-title" src="{{ asset('assets') }}/images/logo-k-text.png" alt="">
+        <img class="logo-abbr" src="{{ asset('') }}images/logo/@myprofile('logo')" alt="">
+        <img class="logo-compact" src="{{ asset('') }}images/logo/@myprofile('logo_text')" alt="">
+        <img class="brand-title" src="{{ asset('') }}images/logo/@myprofile('logo_text')" alt="">
       </a>
 
       <div class="nav-control">
@@ -170,13 +180,44 @@
   <script src="{{ asset('assets') }}/js/plugins-init/jquery.validate-init.js"></script>
 
   {{-- sweet alert --}}
-  {{-- <script src="{{ asset('assets') }}/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
-  <script src="{{ asset('assets') }}/js/plugins-init/sweetalert.init.js"></script> --}}
+  <script src="{{ asset('assets') }}/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
+  <script src="{{ asset('assets') }}/js/plugins-init/sweetalert.init.js"></script>
 
   <script src="{{ asset('assets') }}/js/custom.min.js"></script>
   <script src="{{ asset('assets') }}/js/deznav-init.js"></script>
   <script src="{{ asset('assets') }}/js/demo.js"></script>
   <script src="{{ asset('assets') }}/js/styleSwitcher.js"></script>
+
+  <!-- Daterangepicker -->
+	<!-- momment js is must -->
+	<script src="{{ asset('assets') }}/vendor/moment/moment.min.js"></script>
+	<script src="{{ asset('assets') }}/vendor/bootstrap-daterangepicker/daterangepicker.js"></script>
+	<!-- clockpicker -->
+	<script src="{{ asset('assets') }}/vendor/clockpicker/js/bootstrap-clockpicker.min.js"></script>
+	<!-- asColorPicker -->
+	 <!-- asColorPicker -->
+    <script src="{{ asset('assets') }}/vendor/jquery-asColor/jquery-asColor.min.js"></script>
+    <script src="{{ asset('assets') }}/vendor/jquery-asGradient/jquery-asGradient.min.js"></script>
+    <script src="{{ asset('assets') }}/vendor/jquery-asColorPicker/js/jquery-asColorPicker.min.js"></script>
+	<!-- Material color picker -->
+	<script src="{{ asset('assets') }}/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+	<!-- pickdate -->
+	<script src="{{ asset('assets') }}/vendor/pickadate/picker.js"></script>
+	<script src="{{ asset('assets') }}/vendor/pickadate/picker.time.js"></script>
+	<script src="{{ asset('assets') }}/vendor/pickadate/picker.date.js"></script>
+
+
+
+	<!-- Daterangepicker -->
+	<script src="{{ asset('assets') }}/js/plugins-init/bs-daterange-picker-init.js"></script>
+	<!-- Clockpicker init -->
+	<script src="{{ asset('assets') }}/js/plugins-init/clock-picker-init.js"></script>
+	<!-- asColorPicker init -->
+	<script src="{{ asset('assets') }}/js/plugins-init/jquery-ascolorpicker.init.js"></script>
+	<!-- Material color picker init -->
+	<script src="{{ asset('assets') }}/js/plugins-init/material-date-picker-init.js"></script>
+	<!-- Pickdate -->
+	<script src="{{ asset('assets') }}/js/plugins-init/pickadate-init.js"></script>
 
   <script>
     (function() {

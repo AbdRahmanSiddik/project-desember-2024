@@ -14,6 +14,7 @@
 @endsession
 
 
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var toastElement = document.getElementById('successToast');
@@ -42,3 +43,24 @@
     // Jalankan fungsi updateTimer setiap 1 detik (1000ms)
     setInterval(updateTimer, 1000);
 </script>
+
+
+{{-- sweet alert --}}
+@if ($errors->any())
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            type: 'warning',
+            icon: 'error',
+            title: 'Oops...',
+            html: `
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            `,
+        });
+    });
+</script>
+@endif

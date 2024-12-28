@@ -4,19 +4,13 @@
       <div class="collapse navbar-collapse justify-content-between">
         <div class="header-left">
           <div class="dashboard_bar">
-            {{-- <div class="input-group search-area d-lg-inline-flex d-none">
-              <div class="input-group-append">
-                <button class="input-group-text search_icon search_icon"><i class="flaticon-381-search-2"></i></button>
-              </div>
-              <input type="text" class="form-control" placeholder="Search here...">
-            </div> --}}
           </div>
         </div>
         <ul class="navbar-nav header-right">
           <li class="nav-item">
             <div class="d-flex weather-detail">
-              <span><i class="las la-cloud"></i>21</span>
-              Sumenep, IDN
+              <span>@myprofile('nama_profile')</span>
+              @myprofile('alamat')
             </div>
           </li>
           <li class="nav-item dropdown notification_dropdown">
