@@ -51,7 +51,7 @@ class RekeningFactory extends Factory
                         $idTeller = $key->id;
                         $data[] = [
                             'token_rekening' => Str::random(32),
-                            'no_rekening' => mt_rand(100000000000000, 999999999999999),
+                            'no_rekening' => mt_rand(1000000000, 9999999999),
                             'anggota' => $idAnggota,
                             'nama_rekening' => fake()->name(),
                             'kategori_id' => mt_rand(1, 3),

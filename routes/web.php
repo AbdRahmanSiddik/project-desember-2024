@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CustomerService;
 use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\Auth\SessionController;
@@ -38,6 +39,9 @@ Route::middleware(['auth','verified','role:admin'])->group(function(){
     Route::get('/profile/{profile}/edit',[ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/{profile}',[ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile/{profile}',[ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // bagian customer service
+    Route::get('/customer-service', [CustomerService::class, 'index'])->name('customer-service.index');
 });
 
 

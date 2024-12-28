@@ -54,6 +54,12 @@
           <span class="nav-text">Cabang</span>
         </a>
       </li>
+      <li>
+        <a href="/customer-service" aria-expanded="false">
+          <i class="fa-regular fa-users fw-bold"></i>
+          <span class="nav-text">Customer Service</span>
+        </a>
+      </li>
       @endif
 
       <li class="px-4 pt-4 mt-4 border-top border-primary">

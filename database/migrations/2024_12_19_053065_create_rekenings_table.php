@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('rekenings', function (Blueprint $table) {
             $table->unsignedBigInteger('id_rekening')->autoIncrement();
             $table->string('token_rekening', 32);
-            $table->string('no_rekening', 15);
+            $table->string('no_rekening', 10);
             $table->foreignId('anggota')->constrained('users')->cascadeOnDelete();
             $table->string('nama_rekening', 100);
             $table->unsignedInteger('kategori_id');
