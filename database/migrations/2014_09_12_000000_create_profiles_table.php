@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->unsignedInteger('id_profile')->autoIncrement();
             $table->string('token_profile', 32);
-            $table->string('no_profile', 4);
+            $table->string('no_profile', 6);
             $table->string('logo', 100);
             $table->string('logo_text', 100);
             $table->string('nama_profile', 100);

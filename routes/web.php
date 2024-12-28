@@ -23,7 +23,7 @@ Route::middleware(['auth','verified'])->group(function(){
     })->name('dashboard');
 });
 
-Route::middleware(['auth','verified','role:admin'])->group(function(){
+Route::middleware(['auth','verified','role:admin,operator'])->group(function(){
 
     // bagian kategori
     Route::get('/kategori',[KategoriController::class, 'index'])->name('kategori.index');

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('token_user', 32);
             $table->string('name');
+            $table->string('foto_user', 100);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

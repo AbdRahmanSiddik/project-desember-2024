@@ -19,7 +19,7 @@ class ProfileFactory extends Factory
     {
         return [
             'token_profile' => Str::random(32), // Token acak 32 karakter
-            'no_profile' => mt_rand(1000, 9999), // Kombinasi uniqid() dan angka acak 4 digit
+            'no_profile' => mt_rand(000000, 999999), // Kombinasi uniqid() dan angka acak 4 digit
             'logo' => fake()->imageUrl(62, 53), // Path lokal untuk logo
             'logo_text' => fake()->imageUrl(128, 60), // Path lokal untuk logo text
             'nama_profile' => fake()->company(), // Nama perusahaan

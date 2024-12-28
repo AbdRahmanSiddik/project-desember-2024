@@ -27,7 +27,16 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-
+        Profile::create([
+            'token_profile' => Str::random(32), // Token acak 32 karakter
+            'no_profile' => mt_rand(000000, 999999), // Kombinasi uniqid() dan angka acak 4 digit
+            'logo' => 'logo_pusat.png', // Path lokal untuk logo
+            'logo_text' => 'logo_text_pusat.png', // Path lokal untuk logo text
+            'nama_profile' => 'kantor Pusat', // Nama perusahaan
+            'alamat' => fake()->address(), // Alamat acak
+            'deskripsi' => fake()->sentence(3), // Kalimat deskripsi dengan panjang tetap
+            'created_at' => now(), // Tanggal saat ini
+        ]);
         Profile::factory(2)->create();
 
         Kategori::create([
@@ -51,7 +60,20 @@ class DatabaseSeeder extends Seeder
             'deskripsi' => fake()->paragraph(mt_rand(2,3))
         ]);
 
-        User::factory(15)->create();
+        User::create([
+            'token_user' => Str::random(32),
+            'name' => fake()->name(),
+            'foto_user' => fake()->imageUrl(),
+            'email' => fake()->unique()->safeEmail(),
+            'email_verified_at' => now(),
+            //'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => bcrypt('123'),
+            'remember_token' => Str::random(10),
+            'profile_id' => 1,
+            'role' => 'admin'
+        ]);
+        User::factory(14)->create();
+
         // Rekening::factory()->create();
         // Tabungan::factory(20)->create();
         $anggota = User::where('role', 'anggota')->get();
