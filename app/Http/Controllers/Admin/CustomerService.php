@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\CustomerServiceRequest;
+use App\Mail\AccountSuspended;
 use App\Models\Admin\Profile;
 use App\Models\Teller\Pegadaian;
 use App\Models\Teller\PembayaranPegadaian;
@@ -14,6 +15,7 @@ use App\Models\Teller\Pinjaman;
 use App\Models\Teller\Rekening;
 use App\Models\Teller\Tabungan;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 
 class CustomerService extends Controller
 {
@@ -72,7 +74,8 @@ class CustomerService extends Controller
         $service->update([
             'status' => 'nonaktif',
         ]);
-
+        Mail::to($service->email)->send(new AccountSuspended());
         return redirect()->route('customer-service.index')->with('success', 'Status Customer Service berhasil diubah.');
     }
+
 }
