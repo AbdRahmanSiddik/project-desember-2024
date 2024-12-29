@@ -9,18 +9,20 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class AccountSuspended extends Mailable
+class UserCreate extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $type;
+    protected $password;
+    protected $email;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($type = 'suspend')
+    public function __construct($password, $email)
     {
-        $this->type = $type;
+        $this->password = $password;
+        $this->email = $email;
     }
 
     /**
@@ -29,7 +31,7 @@ class AccountSuspended extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->type == 'suspend' ? 'Akun Anda Telah Dinonaktifkan' : 'Akun Anda Telah Diaktifkan',
+            subject: 'Admin Koperasi',
         );
     }
 
@@ -38,12 +40,11 @@ class AccountSuspended extends Mailable
      */
     public function content(): Content
     {
-        $type = $this->type;
-
         return new Content(
-            view: 'mails.account-suspended',
+            view: 'mails.user-create',
             with: [
-                'type' => $type,
+                'password' => $this->password,
+                'email' => $this->email,
             ],
         );
     }

@@ -120,7 +120,7 @@
                 <span class="text-black"><strong>{{ auth()->user()->name }}</strong></span>
                 <p class="fs-12 mb-0">{{ auth()->user()->role }}</p>
               </div>
-              <img src="{{ asset('assets') }}/images/profile/17.jpg" width="20" alt="">
+              <img src="{{ asset('images/user/'.auth()->user()->foto_user) }}" width="20" alt="">
             </a>
             <div class="dropdown-menu dropdown-menu-end">
               <a href="app-profile.html" class="dropdown-item ai-icon">

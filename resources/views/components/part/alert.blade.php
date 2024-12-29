@@ -77,7 +77,7 @@
         <div class="modal-body">{{ session('service') }}</div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
-          <form action="{{ route('service', session('token')) }}" method="POST">
+          <form action="{{ route('suspend', session('token')) }}" method="POST">
             @csrf
             @method('PATCH')
             <button type="submit" class="btn btn-primary">Tangguhkan Akun</button>

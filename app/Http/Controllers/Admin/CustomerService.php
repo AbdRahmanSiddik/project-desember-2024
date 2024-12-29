@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Http\Request;
 use App\Http\Requests\CustomerServiceRequest;
 use App\Mail\AccountSuspended;
+use App\Mail\UserCreate;
 use App\Models\Admin\Profile;
 use App\Models\Teller\Pegadaian;
 use App\Models\Teller\PembayaranPegadaian;
@@ -14,8 +13,11 @@ use App\Models\Teller\PembayaranPinjaman;
 use App\Models\Teller\Pinjaman;
 use App\Models\Teller\Rekening;
 use App\Models\Teller\Tabungan;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class CustomerService extends Controller
 {
@@ -42,10 +44,63 @@ class CustomerService extends Controller
 
     public function create()
     {
-        $data = [
-            'profiles' => Profile::select('id_profile', 'nama_profile')->get(),
-        ];
-        return view('admin.customer-service.create', $data);
+        return view('admin.customer-service.create');
+    }
+
+    public function store(CustomerServiceRequest $request)
+    {
+        $token = Str::random(32);
+        $name = $request->name;
+        $file = $request->file('foto_user');
+        $fileName = $token . '.' . $file->getClientOriginalExtension();
+        $email = $request->email;
+        $profile_id = auth()->user()->profile_id;
+        $role = $request->role;
+        $password = uniqid().$role;
+
+        User::create([
+            'token_user' => $token,
+            'name' => $name,
+            'email' => $email,
+            'email_verified_at' => now(),
+            'password' => bcrypt($password),
+            'foto_user' => $fileName,
+            'profile_id' => $profile_id,
+            'role' => $role,
+            'status' => 'aktif',
+        ]);
+
+        Mail::to($email)->send(new UserCreate($password, $email));
+
+        $file->move('images/user', $fileName);
+
+        return redirect()->route('customer-service.index')->with('success', 'Customer Service berhasil ditambahkan.');
+    }
+
+    public function edit(User $customer_service)
+    {
+        return view('admin.customer-service.edit', compact('customer_service'));
+    }
+
+    public function update(CustomerServiceRequest $request, User $customer_service)
+    {
+        $data = $request->only(['name', 'email', 'role']);
+        $data['profile_id'] = auth()->user()->profile_id;
+
+        if ($request->hasFile('foto_user')) {
+            // Delete old file
+            File::delete('images/user/' . $customer_service->foto_user);
+
+            // Upload new file
+            $file = $request->file('foto_user');
+            $fileName = Str::random(32) . '.' . $file->getClientOriginalExtension();
+            $file->move('images/user', $fileName);
+            $data['foto_user'] = $fileName;
+        }
+
+        $customer_service->update($data);
+
+        return redirect()->route('customer-service.index')->with('success', 'Customer Service berhasil diperbarui.');
     }
 
     public function destroy(User $customer_service)
@@ -67,15 +122,6 @@ class CustomerService extends Controller
             $customer_service->delete();
             return redirect()->route('customer-service.index')->with('success', 'Customer Service berhasil dihapus.');
         }
-    }
-
-    public function service(User $service)
-    {
-        $service->update([
-            'status' => 'nonaktif',
-        ]);
-        Mail::to($service->email)->send(new AccountSuspended());
-        return redirect()->route('customer-service.index')->with('success', 'Status Customer Service berhasil diubah.');
     }
 
 }

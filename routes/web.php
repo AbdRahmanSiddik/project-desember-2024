@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CustomerService;
 use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\admin\ProfileController;
+use App\Http\Controllers\auth\AccountController;
 use App\Http\Controllers\Auth\SessionController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,12 +43,16 @@ Route::middleware(['auth','verified','role:admin,operator'])->group(function(){
 
     // bagian customer service
     Route::get('/customer-service', [CustomerService::class, 'index'])->name('customer-service.index');
+    Route::get('/customer-service/create', [CustomerService::class, 'create'])->name('customer-service.create');
     Route::post('/customer-service', [CustomerService::class, 'store'])->name('customer-service.store');
     Route::get('/customer-service/{customer_service}', [CustomerService::class, 'show'])->name('customer-service.show');
     Route::get('/customer-service/{customer_service}/edit', [CustomerService::class, 'edit'])->name('customer-service.edit');
-    Route::put('/customer-service/{customer_service}', [CustomerService::class, 'update'])->name('customer-service.update');
+    Route::patch('/customer-service/{customer_service}', [CustomerService::class, 'update'])->name('customer-service.update');
     Route::delete('/customer-service/{customer_service}', [CustomerService::class, 'destroy'])->name('customer-service.destroy');
-    Route::patch('/service/{service}', [CustomerService::class, 'service'])->name('service');
+
+    // bagian suspend dan unsuspend
+    Route::patch('/suspend/{suspend}', [AccountController::class, 'suspend'])->name('suspend');
+    Route::patch('/unsuspend/{unsuspend}', [AccountController::class, 'unsuspend'])->name('unsuspend');
 
 });
 

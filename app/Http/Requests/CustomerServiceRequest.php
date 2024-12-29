@@ -11,7 +11,7 @@ class CustomerServiceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,15 +21,13 @@ class CustomerServiceRequest extends FormRequest
      */
     public function rules(): array
     {
-        $userId = $this->route('customer_service'); // Using the route parameter 'customer_service'
+        $userId = $this->route('customer_service') ? $this->route('customer_service')->id : null;
         return [
             'name' => 'required|string|max:255',
-            'foto_user' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto_user' => $userId ? 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048' : 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'email' => 'required|string|email|max:255|unique:users,email,' . $userId,
-            'password' => 'required|string|min:8',
-            'profile_id' => 'required|integer|exists:profiles,id_profile',
             'role' => 'required|in:teller,admin,operator,anggota',
-        ];
+        ];  
     }
 
     public function messages(): array
@@ -47,12 +45,6 @@ class CustomerServiceRequest extends FormRequest
             'email.email' => 'Email harus berupa alamat email yang valid.',
             'email.max' => 'Email maksimal 255 karakter.',
             'email.unique' => 'Email sudah terdaftar.',
-            'password.required' => 'Kata sandi wajib diisi.',
-            'password.string' => 'Kata sandi harus berupa string.',
-            'password.min' => 'Kata sandi minimal 8 karakter.',
-            'profile_id.required' => 'ID profil wajib diisi.',
-            'profile_id.integer' => 'ID profil harus berupa angka.',
-            'profile_id.exists' => 'ID profil tidak ditemukan.',
             'role.required' => 'Peran wajib diisi.',
             'role.in' => 'Peran harus salah satu dari: teller, admin, operator, anggota.',
         ];
