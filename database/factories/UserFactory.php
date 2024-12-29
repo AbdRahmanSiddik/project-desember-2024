@@ -27,7 +27,8 @@ class UserFactory extends Factory
             'password' => bcrypt('123'),
             'remember_token' => Str::random(10),
             'profile_id' => mt_rand(1, 2),
-            'role' => fake()->randomElement(['teller', 'anggota', 'operator', 'admin'])
+            'role' => fake()->randomElement(['teller', 'anggota', 'operator', 'admin']),
+            'status' => 'aktif',
         ];
     }
 

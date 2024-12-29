@@ -70,7 +70,8 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123'),
             'remember_token' => Str::random(10),
             'profile_id' => 1,
-            'role' => 'admin'
+            'role' => 'admin',
+            'status' => 'aktif',
         ]);
         User::factory(14)->create();
 

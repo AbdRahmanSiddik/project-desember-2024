@@ -22,6 +22,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->unsignedInteger('profile_id');
             $table->enum('role', ['teller', 'admin', 'operator', 'anggota'])->default('anggota');
+            $table->enum('status', ['aktif', 'nonaktif'])->default('aktif');
             $table->timestamps();
 
             $table->foreign('profile_id')

@@ -14,15 +14,28 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $primaryKey = 'token_user';
+    protected $keyType = 'string';
+
+    public function getRouteKeyName()
+    {
+        return 'token_user';
+    }
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
+        'token_user',
         'name',
         'email',
         'password',
+        'profile_id',
+        'foto_user',
+        'role',
+        'status',
     ];
 
     /**
