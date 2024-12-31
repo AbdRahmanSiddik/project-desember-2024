@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifyEmail;
+use Illuminate\Support\Facades\Route;
 
 class SessionController extends Controller
 {
@@ -105,7 +106,7 @@ class SessionController extends Controller
     {
         $user = User::where('token_user', $token)->update(['email_verified_at' => now()]);
 
-        return redirect()->route('dashboard')->with('success', 'Email verified successfully! You can now log in.');
+        return redirect()->route('login')->with('success', 'Email verified successfully! You can now log in.');
     }
 
     function resendEmail($token)
@@ -113,6 +114,8 @@ class SessionController extends Controller
         $user = User::where('token_user', $token)->firstOrFail();
         Mail::to($user->email)->send(new VerifyEmail($user));
 
-        return back()->with('success', 'Verification email sent! Please check your email.');
+        app()->call('App\Http\Controllers\Auth\SessionController@logout');
+
+        return redirect()->route('login')->with('success', 'Verification email sent! Please check your email.');
     }
 }

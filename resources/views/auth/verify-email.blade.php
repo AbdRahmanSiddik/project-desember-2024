@@ -1,15 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verify Email</title>
-</head>
-<body>
-    <h1>Verify Your Email Address</h1>
-    <p>
-        Before proceeding, please check your email for a verification link.
-        If you did not receive the email, <a href="{{ route('verification.resend', auth()->user()->token_user) }}">click here to request another</a>.
-    </p>
-</body>
-</html>
+@php
+    $title = 'Verifikasi Email';
+@endphp
+@extends('layout.auth')
+
+@section('form')
+  <form action="{{ route('verification.resend', auth()->user()->token_user) }}" method="POST" class="d-grid">
+    @csrf
+      <h1>Verifikasi Alamat Email Anda</h1>
+      <p>
+        Sebelum melanjutkan, silakan periksa email Anda untuk tautan verifikasi.
+        Jika Anda tidak menerima email tersebut, klik tombol di bawah ini untuk meminta yang lain.
+      </p>
+      <button type="submit" class="btn btn-primary">Kirim Email Verifikasi</button>
+  </form>
+@endsection

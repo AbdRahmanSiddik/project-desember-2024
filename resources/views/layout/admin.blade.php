@@ -31,14 +31,15 @@
   <link class="main-css" href="{{ asset('assets') }}/css/style.css" rel="stylesheet">
 
   <!-- Daterange picker -->
-	<link href="{{ asset('assets') }}/vendor/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-	<!-- Clockpicker -->
-	<link href="{{ asset('assets') }}/vendor/clockpicker/css/bootstrap-clockpicker.min.css" rel="stylesheet">
-	<!-- Material color picker -->
-	<link href="{{ asset('assets') }}/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
-	<!-- Pick date -->
-	<link rel="stylesheet" href="{{ asset('assets') }}/vendor/pickadate/themes/default.css">
-	<link rel="stylesheet" href="{{ asset('assets') }}/vendor/pickadate/themes/default.date.css">
+  <link href="{{ asset('assets') }}/vendor/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+  <!-- Clockpicker -->
+  <link href="{{ asset('assets') }}/vendor/clockpicker/css/bootstrap-clockpicker.min.css" rel="stylesheet">
+  <!-- Material color picker -->
+  <link href="{{ asset('assets') }}/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"
+    rel="stylesheet">
+  <!-- Pick date -->
+  <link rel="stylesheet" href="{{ asset('assets') }}/vendor/pickadate/themes/default.css">
+  <link rel="stylesheet" href="{{ asset('assets') }}/vendor/pickadate/themes/default.date.css">
 
   <style>
     /* Hides the spinner controls in Chrome, Safari, Edge, and Opera */
@@ -150,6 +151,8 @@
         Main wrapper end
     ***********************************-->
 
+  <x-part.auth-alert></x-part.auth-alert>
+
   <!--**********************************
         Scripts
     ***********************************-->
@@ -189,35 +192,36 @@
   <script src="{{ asset('assets') }}/js/styleSwitcher.js"></script>
 
   <!-- Daterangepicker -->
-	<!-- momment js is must -->
-	<script src="{{ asset('assets') }}/vendor/moment/moment.min.js"></script>
-	<script src="{{ asset('assets') }}/vendor/bootstrap-daterangepicker/daterangepicker.js"></script>
-	<!-- clockpicker -->
-	<script src="{{ asset('assets') }}/vendor/clockpicker/js/bootstrap-clockpicker.min.js"></script>
-	<!-- asColorPicker -->
-	 <!-- asColorPicker -->
-    <script src="{{ asset('assets') }}/vendor/jquery-asColor/jquery-asColor.min.js"></script>
-    <script src="{{ asset('assets') }}/vendor/jquery-asGradient/jquery-asGradient.min.js"></script>
-    <script src="{{ asset('assets') }}/vendor/jquery-asColorPicker/js/jquery-asColorPicker.min.js"></script>
-	<!-- Material color picker -->
-	<script src="{{ asset('assets') }}/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
-	<!-- pickdate -->
-	<script src="{{ asset('assets') }}/vendor/pickadate/picker.js"></script>
-	<script src="{{ asset('assets') }}/vendor/pickadate/picker.time.js"></script>
-	<script src="{{ asset('assets') }}/vendor/pickadate/picker.date.js"></script>
+  <!-- momment js is must -->
+  <script src="{{ asset('assets') }}/vendor/moment/moment.min.js"></script>
+  <script src="{{ asset('assets') }}/vendor/bootstrap-daterangepicker/daterangepicker.js"></script>
+  <!-- clockpicker -->
+  <script src="{{ asset('assets') }}/vendor/clockpicker/js/bootstrap-clockpicker.min.js"></script>
+  <!-- asColorPicker -->
+  <!-- asColorPicker -->
+  <script src="{{ asset('assets') }}/vendor/jquery-asColor/jquery-asColor.min.js"></script>
+  <script src="{{ asset('assets') }}/vendor/jquery-asGradient/jquery-asGradient.min.js"></script>
+  <script src="{{ asset('assets') }}/vendor/jquery-asColorPicker/js/jquery-asColorPicker.min.js"></script>
+  <!-- Material color picker -->
+  <script src="{{ asset('assets') }}/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js">
+  </script>
+  <!-- pickdate -->
+  <script src="{{ asset('assets') }}/vendor/pickadate/picker.js"></script>
+  <script src="{{ asset('assets') }}/vendor/pickadate/picker.time.js"></script>
+  <script src="{{ asset('assets') }}/vendor/pickadate/picker.date.js"></script>
 
 
 
-	<!-- Daterangepicker -->
-	<script src="{{ asset('assets') }}/js/plugins-init/bs-daterange-picker-init.js"></script>
-	<!-- Clockpicker init -->
-	<script src="{{ asset('assets') }}/js/plugins-init/clock-picker-init.js"></script>
-	<!-- asColorPicker init -->
-	<script src="{{ asset('assets') }}/js/plugins-init/jquery-ascolorpicker.init.js"></script>
-	<!-- Material color picker init -->
-	<script src="{{ asset('assets') }}/js/plugins-init/material-date-picker-init.js"></script>
-	<!-- Pickdate -->
-	<script src="{{ asset('assets') }}/js/plugins-init/pickadate-init.js"></script>
+  <!-- Daterangepicker -->
+  <script src="{{ asset('assets') }}/js/plugins-init/bs-daterange-picker-init.js"></script>
+  <!-- Clockpicker init -->
+  <script src="{{ asset('assets') }}/js/plugins-init/clock-picker-init.js"></script>
+  <!-- asColorPicker init -->
+  <script src="{{ asset('assets') }}/js/plugins-init/jquery-ascolorpicker.init.js"></script>
+  <!-- Material color picker init -->
+  <script src="{{ asset('assets') }}/js/plugins-init/material-date-picker-init.js"></script>
+  <!-- Pickdate -->
+  <script src="{{ asset('assets') }}/js/plugins-init/pickadate-init.js"></script>
 
   <script>
     (function() {
@@ -304,7 +308,7 @@
         jQuery.post(url, {
           _token: token
         }).done(function(response) {
-            window.location.href = '/';
+          window.location.href = '/';
         }).fail(function(xhr) {
           console.log(xhr.responseText);
         });
