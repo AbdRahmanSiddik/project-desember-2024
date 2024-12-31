@@ -6,18 +6,37 @@ use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\auth\AccountController;
 use App\Http\Controllers\Auth\SessionController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
+
 
 
 Route::middleware(['guest'])->group(function(){
     Route::get('/', function () {
         return view('welcome');
+    });
+    Route::get('/home', function () {
+        return view('welcome');
     })->name('home');
     Route::get('/login', [SessionController::class, 'index'])->name('login');
     Route::post('/login', [SessionController::class, 'login'])->name('login.create');
+    Route::get('/register', [SessionController::class, 'register'])->name('register');
+    Route::post('/register', [SessionController::class, 'regist'])->name('register.create');
 });
 
+// bagian email verification
+Route::middleware('auth')->group(function(){
+    Route::get('/email/verify', function () {
+        return view('auth.verify-email');
+    })->name('verification.notice');
 
+    Route::get('email/resend/{token}', [SessionController::class, 'resendEmail'])->name('verification.resend');
+    Route::get('email/verify/{token}', [SessionController::class, 'verifyEmail'])->name('verification.verify');
+
+});
+
+// bagian logout dan dashboard
 Route::middleware(['auth','verified'])->group(function(){
     Route::post('/logout', [SessionController::class, 'logout'])->name('logout');
     Route::get('/dashboard', function () {
@@ -51,7 +70,7 @@ Route::middleware(['auth','verified','role:admin,operator'])->group(function(){
     Route::patch('/customer-service/{customer_service}', [CustomerService::class, 'update'])->name('customer-service.update');
     Route::delete('/customer-service/{customer_service}', [CustomerService::class, 'destroy'])->name('customer-service.destroy');
 
-    // bagian suspend dan unsuspend
+    // bagian suspend dan unsuspend akun CS
     Route::patch('/suspend/{suspend}', [AccountController::class, 'suspend'])->name('suspend');
     Route::patch('/unsuspend/{unsuspend}', [AccountController::class, 'unsuspend'])->name('unsuspend');
 
