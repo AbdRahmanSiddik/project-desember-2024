@@ -35,7 +35,7 @@ class SessionController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('dashboard')->with('login', 'Login success');
+            return redirect()->intended(auth()->user()->role.'/dashboard')->with('login', 'Login success');
         }
 
         return back()->withErrors([

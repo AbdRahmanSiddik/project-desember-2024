@@ -13,14 +13,14 @@ class UserRole
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $role): Response
+    public function handle(Request $request, Closure $next, ...$roles): Response
     {
-
-        if (auth()->user()->role == $role) {
-
+        // Periksa apakah pengguna login dan memiliki salah satu role
+        if (auth()->check() && in_array(auth()->user()->role, $roles)) {
             return $next($request);
         }
 
+        // Jika tidak memiliki akses, abort dengan kode 403
         abort(403);
     }
 }

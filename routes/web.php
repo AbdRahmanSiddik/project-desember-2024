@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\auth\AccountController;
 use App\Http\Controllers\Auth\SessionController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -16,9 +17,7 @@ Route::middleware(['guest'])->group(function(){
     Route::get('/', function () {
         return view('welcome');
     });
-    Route::get('/home', function () {
-        return view('welcome');
-    })->name('home');
+
     Route::get('/login', [SessionController::class, 'index'])->name('login');
     Route::post('/login', [SessionController::class, 'login'])->name('login.create');
     Route::get('/register', [SessionController::class, 'register'])->name('register');
@@ -37,11 +36,21 @@ Route::middleware('auth')->group(function(){
 });
 
 // bagian logout dan dashboard
-Route::middleware(['auth','verified'])->group(function(){
+Route::middleware(['auth','verified', 'role:admin,operator,teller,anggota'])->group(function(){
     Route::post('/logout', [SessionController::class, 'logout'])->name('logout');
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
+});
+
+Route::middleware(['auth', 'verified', 'role:anggota'])->group(function(){
+    Route::get('/anggota/dashboard', [DashboardController::class, 'anggota'])->name('anggota.dashboard');
+});
+Route::middleware(['auth', 'verified', 'role:admin'])->group(function(){
+    Route::get('/admin/dashboard', [DashboardController::class, 'admin'])->name('admin.dashboard');
+});
+Route::middleware(['auth', 'verified', 'role:operator'])->group(function(){
+    Route::get('/operator/dashboard', [DashboardController::class, 'operator'])->name('operator.dashboard');
+});
+Route::middleware(['auth', 'verified', 'role:teller'])->group(function(){
+    Route::get('/teller/dashboard', [DashboardController::class, 'teller'])->name('teller.dashboard');
 });
 
 Route::middleware(['auth','verified','role:admin,operator'])->group(function(){

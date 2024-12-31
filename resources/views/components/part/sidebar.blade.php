@@ -5,7 +5,7 @@
         <h4 class="fw-bold nav-text">Home</h4>
       </li>
       <li>
-        <a href="/anggota/dashboard" aria-expanded="false">
+        <a href="{{ route(auth()->user()->role.'.dashboard') }}" aria-expanded="false">
           <i class="fa-regular fa-building-columns fw-bold"></i>
           <span class="nav-text">Dashboard</span>
         </a>
@@ -71,13 +71,14 @@
           <span class="nav-text">Setting</span>
         </a>
       </li>
-      <li>
-        <a href="{{ route('logout') }}" id="Logout" aria-expanded="false">
-          <i class="fa-regular fa-arrow-right-to-bracket fw-bold"></i>
-          <span class="nav-text">Logout</span>
-        </a>
-      </li>
     </ul>
+
+    <div class="d-grid px-4 mt-3 text-center">
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button class="btn btn-primary px-5">Logout</button>
+        </form>
+    </div>
 
     <div class="copyright">
       <p>© 2024 All Rights Reserved</p>
