@@ -15,7 +15,7 @@
           <h4 class="fw-bold nav-text">Service</h4>
         </li>
         <li>
-          <a href="/rekening" aria-expanded="false">
+          <a href="{{ route('rekening.index') }}" aria-expanded="false">
             <i class="flaticon-381-notepad"></i>
             <span class="nav-text">Rekening</span>
           </a>
@@ -38,7 +38,7 @@
             <span class="nav-text">Gadai</span>
           </a>
         </li>
-      @elseif (auth()->user()->role == 'admin')
+      @elseif (auth()->user()->role == 'admin' || auth()->user()->role == 'operator')
       <li class="px-4 pt-4 mt-4 border-top border-primary">
         <h4 class="fw-bold nav-text">Menu</h4>
       </li>

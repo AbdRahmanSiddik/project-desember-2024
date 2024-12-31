@@ -120,7 +120,7 @@
                 <span class="text-black"><strong>{{ auth()->user()->name }}</strong></span>
                 <p class="fs-12 mb-0">{{ auth()->user()->role }}</p>
               </div>
-              <img src="{{ asset('images/user/'.auth()->user()->foto_user) }}" width="20" alt="">
+              <img src="{{ auth()->user()->foto_user && file_exists(public_path('images/user/' . auth()->user()->foto_user)) ? asset('images/user/' . auth()->user()->foto_user) : asset('images/user/default.png') }}" width="20" alt="">
             </a>
             <div class="dropdown-menu dropdown-menu-end">
               <a href="app-profile.html" class="dropdown-item ai-icon">

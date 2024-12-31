@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Teller\RekeningController;
 use App\Http\Controllers\Admin\CustomerService;
 use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\admin\ProfileController;
@@ -56,4 +57,13 @@ Route::middleware(['auth','verified','role:admin,operator'])->group(function(){
 
 });
 
-
+Route::middleware(['auth', 'verified', 'role:teller'])->group(function(){
+    // bagian rekening
+    Route::get('/rekening', [RekeningController::class, 'index'])->name('rekening.index');
+    Route::get('/rekening/create', [RekeningController::class, 'create'])->name('rekening.create');
+    Route::post('/rekening', [RekeningController::class, 'store'])->name('rekening.store');
+    Route::get('/rekening/{rekening}', [RekeningController::class, 'show'])->name('rekening.show');
+    Route::get('/rekening/{rekening}/edit', [RekeningController::class, 'edit'])->name('rekening.edit');
+    Route::put('/rekening/{rekening}', [RekeningController::class, 'update'])->name('rekening.update');
+    Route::delete('/rekening/{rekening}', [RekeningController::class, 'destroy'])->name('rekening.destroy');
+});

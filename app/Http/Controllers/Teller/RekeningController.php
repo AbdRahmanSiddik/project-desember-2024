@@ -1,64 +1,54 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Teller;
 
 use App\Http\Controllers\Controller;
 use App\Models\Teller\Rekening;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Requests\Teller\RekeningRequest;
 
 class RekeningController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $rekenings = Rekening::with('anggota', 'teller')->get();
+
+        return view('teller.rekening.index', compact('rekenings'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.rekening.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(RekeningRequest $request)
     {
-        //
+        $token = Str::random(32);
+        $nama_rekening = $request->nama_rekening;
+        $kategori_id = $request->kategori_id;
+        $ktp = $request->ktp;
+        $deskripsi = $request->deskripsi;
+        $file = $request->file('foto_ktp');
+
+        
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Rekening $rekening)
     {
-        //
+        return view('admin.rekening.show', compact('rekening'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Rekening $rekening)
     {
-        //
+        return view('admin.rekening.edit', compact('rekening'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Rekening $rekening)
+    public function update(RekeningRequest $request, Rekening $rekening)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Rekening $rekening)
     {
         //
