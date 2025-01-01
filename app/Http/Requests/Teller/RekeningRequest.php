@@ -26,6 +26,7 @@ class RekeningRequest extends FormRequest
             'kategori_id' => 'required|exists:kategoris,id_kategori',
             'ktp' => 'required|string|size:16',
             'deskripsi' => 'nullable|string',
+            'token_anggota' => 'required|string|exists:users,token_user',
         ];
 
         if ($this->isMethod('post')) {
@@ -55,6 +56,9 @@ class RekeningRequest extends FormRequest
             'foto_ktp.image' => 'Foto KTP harus berupa gambar.',
             'foto_ktp.max' => 'Foto KTP tidak boleh lebih dari 1024 kilobyte.',
             'deskripsi.string' => 'Deskripsi harus berupa string.',
+            'token_anggota.required' => 'Anggota wajib diisi.',
+            'token_anggota.exists' => 'Anggota yang dipilih tidak ada.',
+            'token_anggota.string' => 'Anggota harus berupa string.',
         ];
     }
 }

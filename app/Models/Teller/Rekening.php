@@ -19,13 +19,18 @@ class Rekening extends Model
         return 'token_rekening';
     }
 
-    public function anggota()
+    public function anggotas()
     {
         return $this->belongsTo(User::class, 'anggota', 'id');
     }
 
-    public function teller()
+    public function tellers()
     {
         return $this->belongsTo(User::class, 'teller', 'id');
+    }
+
+    public function tabungan()
+    {
+        return $this->hasMany(Tabungan::class, 'rekening_id', 'id_rekening');
     }
 }

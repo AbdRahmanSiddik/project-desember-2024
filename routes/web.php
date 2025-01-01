@@ -36,24 +36,24 @@ Route::middleware('auth')->group(function(){
 });
 
 // bagian logout dan dashboard
-Route::middleware(['auth','verified', 'role:admin,operator,teller,anggota'])->group(function(){
+Route::middleware(['auth','verified', 'role:admin,operator,teller,anggota', 'aktif'])->group(function(){
     Route::post('/logout', [SessionController::class, 'logout'])->name('logout');
 });
 
-Route::middleware(['auth', 'verified', 'role:anggota'])->group(function(){
+Route::middleware(['auth', 'verified', 'role:anggota', 'aktif'])->group(function(){
     Route::get('/anggota/dashboard', [DashboardController::class, 'anggota'])->name('anggota.dashboard');
 });
-Route::middleware(['auth', 'verified', 'role:admin'])->group(function(){
+Route::middleware(['auth', 'verified', 'role:admin', 'aktif'])->group(function(){
     Route::get('/admin/dashboard', [DashboardController::class, 'admin'])->name('admin.dashboard');
 });
-Route::middleware(['auth', 'verified', 'role:operator'])->group(function(){
+Route::middleware(['auth', 'verified', 'role:operator', 'aktif'])->group(function(){
     Route::get('/operator/dashboard', [DashboardController::class, 'operator'])->name('operator.dashboard');
 });
-Route::middleware(['auth', 'verified', 'role:teller'])->group(function(){
+Route::middleware(['auth', 'verified', 'role:teller', 'aktif'])->group(function(){
     Route::get('/teller/dashboard', [DashboardController::class, 'teller'])->name('teller.dashboard');
 });
 
-Route::middleware(['auth','verified','role:admin,operator'])->group(function(){
+Route::middleware(['auth','verified','role:admin,operator', 'aktif'])->group(function(){
 
     // bagian kategori
     Route::get('/kategori',[KategoriController::class, 'index'])->name('kategori.index');
@@ -85,7 +85,7 @@ Route::middleware(['auth','verified','role:admin,operator'])->group(function(){
 
 });
 
-Route::middleware(['auth', 'verified', 'role:teller'])->group(function(){
+Route::middleware(['auth', 'verified', 'role:teller', 'aktif'])->group(function(){
     // bagian rekening
     Route::get('/rekening', [RekeningController::class, 'index'])->name('rekening.index');
     Route::get('/rekening/create', [RekeningController::class, 'create'])->name('rekening.create');
