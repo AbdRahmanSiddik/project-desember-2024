@@ -151,7 +151,7 @@
         Main wrapper end
     ***********************************-->
 
-  <x-part.auth-alert></x-part.auth-alert>
+  {{-- <x-part.auth-alert></x-part.auth-alert> --}}
 
   <!--**********************************
         Scripts

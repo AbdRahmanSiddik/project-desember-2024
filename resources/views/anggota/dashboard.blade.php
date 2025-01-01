@@ -14,19 +14,19 @@
                 <img src="{{ asset('') }}assets/images/card/card.png" alt="" class="mw-100">
                 <div class="card-info text-white">
                   <p class="mb-1 text-white">Total Saldo</p>
-                  <h2 class="fs-36 text-white mb-sm-4 mb-3">@rupiah(67341266)</h2>
+                  <h2 class="fs-36 text-white mb-sm-4 mb-3">@rupiah($saldo)</h2>
                   <div class="d-flex align-items-center justify-content-between mb-sm-5 mb-3">
                     <img src="{{ asset('') }}assets/images/dual-dot.png" alt="" class="dot-img">
-                    <h4 class="fs-20 text-white mb-0">**** **** **** 1234</h4>
+                    <h4 class="fs-20 text-white mb-0">{{ $rekening->no_rekening }}</h4>
                   </div>
                   <div class="d-flex">
                     <div class="me-5">
-                      <p class="fs-14 mb-1 text-white op6">VALID THRU</p>
-                      <span>08/21</span>
+                      <p class="fs-14 mb-1 text-white op6">{{ $rekening->kategori->nama_kategori }}</p>
+                      <span>{{ $rekening->created_at->format('m/y') }}</span>
                     </div>
                     <div>
-                      <p class="fs-14 mb-1 text-white op6">ANGGOTA</p>
-                      <span>Ucup</span>
+                      <p class="fs-14 mb-1 text-white op6">@ucfirst(auth()->user()->role)</p>
+                      <span>{{ $rekening->nama_rekening }}</span>
                     </div>
                   </div>
                 </div>

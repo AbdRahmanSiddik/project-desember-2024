@@ -10,7 +10,7 @@ class DashboardController extends Controller
 {
     public function anggota()
     {
-        $rekening = Rekening::where('anggota', auth()->user()->id);
+        $rekening = Rekening::where('anggota', auth()->user()->id)->with(['anggotas.profile', 'tellers.profile', 'kategori']);
         if ($rekening->count() > 0) {
 
             $saldoMasuk = Tabungan::where('rekening_id', $rekening->first()->id)
@@ -25,6 +25,7 @@ class DashboardController extends Controller
             $data = [
                 'saldo' => $saldo,
                 'haveRekening' => $rekening->count(),
+                'rekening' => $rekening->first(),
             ];
         }else{
             $data = [
@@ -32,8 +33,6 @@ class DashboardController extends Controller
                 'haveRekening' => $rekening->count(),
             ];
         }
-
-
 
         return view('anggota.dashboard', $data);
     }

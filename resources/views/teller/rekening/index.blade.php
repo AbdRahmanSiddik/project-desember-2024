@@ -85,4 +85,5 @@
       </div>
     </div>
   </div>
+  <x-part.alert></x-part.alert>
 </x-admin>

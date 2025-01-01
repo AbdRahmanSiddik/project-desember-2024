@@ -25,7 +25,7 @@ class RekeningController extends Controller
         $data = [
             'kategoris' => Kategori::select('token_kategori', 'nama_kategori', 'id_kategori')->get()
         ];
-        return view('admin.rekening.create', $data);
+        return view('teller.rekening.create', $data);
     }
 
     public function store(RekeningRequest $request)
@@ -38,16 +38,16 @@ class RekeningController extends Controller
         $anggota = User::where('token_user', $request->token_anggota)->first()->id;
         $file = $request->file('foto_ktp');
 
-        $file_name = $token.".".$file->getClientOriginalName();
+        $file_name = $token.".".$file->getClientOriginalExtension();
 
-        $no_rekening = Profile::where('id_profile', auth()->user()->profile_id)->first()->no_profile.mt_rand(000000, 999999);
+        $no_rekening = Profile::where('id_profile', auth()->user()->profile_id)->first()->no_profile.mt_rand(0000, 9999);
 
         $data = [
             'token_rekening' => $token,
             'no_rekening' => $no_rekening,
             'nama_rekening' => $nama_rekening,
             'anggota' => $anggota,
-            'kategori_id' => $kategori_id->id,
+            'kategori_id' => $kategori_id,
             'ktp' => $ktp,
             'foto_ktp' => $file_name,
             'deskripsi' => $deskripsi,
@@ -62,12 +62,12 @@ class RekeningController extends Controller
 
     public function show(Rekening $rekening)
     {
-        return view('admin.rekening.show', compact('rekening'));
+        return view('teller.rekening.show', compact('rekening'));
     }
 
     public function edit(Rekening $rekening)
     {
-        return view('admin.rekening.edit', compact('rekening'));
+        return view('teller.rekening.edit', compact('rekening'));
     }
 
     public function update(RekeningRequest $request, Rekening $rekening)
@@ -78,5 +78,12 @@ class RekeningController extends Controller
     public function destroy(Rekening $rekening)
     {
         //
+    }
+
+    public function ktp($ktp)
+    {
+        return response()->file(storage_path('app/private/ktp/'.$ktp), [
+            'Content-Disposition' => 'inline' // Untuk menampilkan langsung di browser
+        ]);
     }
 }

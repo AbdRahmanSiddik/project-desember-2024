@@ -3,7 +3,7 @@
 <head>
 
      <!--Title-->
-	<title>@ucfirst(auth()->user()->role) | error</title>
+	<title>404</title>
 
 	<!-- Meta -->
 	<meta charset="utf-8">

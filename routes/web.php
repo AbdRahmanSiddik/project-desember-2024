@@ -37,7 +37,10 @@ Route::middleware('auth')->group(function(){
 
 // bagian logout dan dashboard
 Route::middleware(['auth','verified', 'role:admin,operator,teller,anggota', 'aktif'])->group(function(){
+    // logout
     Route::post('/logout', [SessionController::class, 'logout'])->name('logout');
+    // ktp akses
+    Route::get('/ktp/{ktp}', [RekeningController::class, 'ktp'])->name('ktp');
 });
 
 Route::middleware(['auth', 'verified', 'role:anggota', 'aktif'])->group(function(){
@@ -94,4 +97,6 @@ Route::middleware(['auth', 'verified', 'role:teller', 'aktif'])->group(function(
     Route::get('/rekening/{rekening}/edit', [RekeningController::class, 'edit'])->name('rekening.edit');
     Route::put('/rekening/{rekening}', [RekeningController::class, 'update'])->name('rekening.update');
     Route::delete('/rekening/{rekening}', [RekeningController::class, 'destroy'])->name('rekening.destroy');
+
+
 });
