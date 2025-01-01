@@ -34,7 +34,8 @@
                         {{ $item->nama_rekening }}
                       </td>
                       <td>
-                        {{ $item->no_rekening }}
+                        <p>{{ $item->no_rekening }}</p>
+                        <small>{{ $item->kategori->nama_kategori }}</small>
                       </td>
                       <td>
                         <p>{{ $item->created_at->format('d F Y') }}</p>
@@ -46,7 +47,7 @@
                       </td>
                       <td class="text-start">
                         <div class="d-flex justify-content-start gap-2">
-                          <a href="{{ route('profile.edit', $item->token_rekening) }}"
+                          <a href="{{ route('rekening.edit', $item->token_rekening) }}"
                             class="btn btn-primary shadow btn-xs sharp"><i class="fas fa-pencil-alt"></i></a>
                           <button type="button" class="btn btn-danger shadow btn-xs sharp" data-bs-toggle="modal"
                             data-bs-target="#basicModal{{ $item->token_rekening }}"><i
@@ -67,7 +68,7 @@
                           <div class="modal-body">Modal body text goes here.</div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
-                            <form action="{{ route('profile.destroy', $item->token_rekening) }}" method="POST">
+                            <form action="{{ route('rekening.destroy', $item->token_rekening) }}" method="POST">
                               @csrf
                               @method('DELETE')
                               <button type="submit" class="btn btn-primary">Save changes</button>

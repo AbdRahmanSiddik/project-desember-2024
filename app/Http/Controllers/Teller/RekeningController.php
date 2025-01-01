@@ -9,7 +9,11 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Teller\RekeningRequest;
 use App\Models\Admin\Kategori;
 use App\Models\Admin\Profile;
+use App\Models\Teller\Pegadaian;
+use App\Models\Teller\Pinjaman;
+use App\Models\Teller\Tabungan;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class RekeningController extends Controller
 {
@@ -67,17 +71,71 @@ class RekeningController extends Controller
 
     public function edit(Rekening $rekening)
     {
-        return view('teller.rekening.edit', compact('rekening'));
+        $tabungan = Tabungan::where('rekening_id', $rekening->id_rekening);
+        $tabungan_masuk = $tabungan->where('jenis', 'masuk')->count('jumlah');
+        $tabungan_keluar = $tabungan->where('jenis', 'keluar')->count('jumlah');
+        $saldo = $tabungan_masuk - $tabungan_keluar;
+        if($saldo > 0){
+            $close = true;
+        } else {
+            $close = false;
+        }
+        $kategoris = Kategori::select('token_kategori', 'nama_kategori', 'id_kategori')->get();
+        return view('teller.rekening.edit', compact('rekening', 'kategoris', 'close'));
     }
 
     public function update(RekeningRequest $request, Rekening $rekening)
     {
-        //
+        $token = Str::random(32);
+        $nama_rekening = $request->nama_rekening;
+        $kategori_id = $request->kategori_id;
+        $ktp = $request->ktp;
+        $deskripsi = $request->deskripsi;
+        $anggota = User::where('token_user', $request->token_anggota)->first()->id;
+        if($request->hasFile('foto_ktp')) {
+            $file = $request->file('foto_ktp');
+            $file_name = $token.".".$file->getClientOriginalExtension();
+            $file->storeAs('private/ktp', $file_name, 'local');
+            if(Storage::exists('private/ktp/'.$rekening->foto_ktp)) {
+                Storage::delete('private/ktp/'.$rekening->foto_ktp);
+            }
+        }else{
+            $file_name = $rekening->foto_ktp;
+        }
+
+        $data = [
+            'token_rekening' => $token,
+            'nama_rekening' => $nama_rekening,
+            'anggota' => $anggota,
+            'kategori_id' => $kategori_id,
+            'ktp' => $ktp,
+            'foto_ktp' => $file_name,
+            'deskripsi' => $deskripsi,
+        ];
+
+        $rekening->update($data);
+
+        return redirect()->route('rekening.index')->with('success', 'Rekening berhasil diubah');
     }
 
     public function destroy(Rekening $rekening)
     {
-        //
+        $tabungan = Tabungan::where('rekening_id', $rekening->id_rekening);
+        $tabungan_masuk = $tabungan->where('jenis', 'masuk')->count('jumlah');
+        $tabungan_keluar = $tabungan->where('jenis', 'keluar')->count('jumlah');
+        $saldo = $tabungan_masuk - $tabungan_keluar;
+        $pinjaman = Pinjaman::where('rekening_id', $rekening->id_rekening)->count('jumlah');
+        $pegadaian = Pegadaian::where('rekening_id', $rekening->id_rekening)->count('jumlah');
+        $cek = $saldo + $pinjaman + $pegadaian;
+        if ($cek > 0) {
+            return redirect()->route('rekening.index')->with('error', 'Rekening tidak bisa dihapus karena masih memiliki saldo atau pinjaman');
+        } else {
+            $rekening->delete();
+            if(Storage::exists('private/ktp/'.$rekening->foto_ktp)) {
+                Storage::delete('private/ktp/'.$rekening->foto_ktp);
+            }
+            return redirect()->route('rekening.index')->with('success', 'Rekening berhasil dihapus');
+        }
     }
 
     public function ktp($ktp)

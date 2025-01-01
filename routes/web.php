@@ -95,8 +95,6 @@ Route::middleware(['auth', 'verified', 'role:teller', 'aktif'])->group(function(
     Route::post('/rekening', [RekeningController::class, 'store'])->name('rekening.store');
     Route::get('/rekening/{rekening}', [RekeningController::class, 'show'])->name('rekening.show');
     Route::get('/rekening/{rekening}/edit', [RekeningController::class, 'edit'])->name('rekening.edit');
-    Route::put('/rekening/{rekening}', [RekeningController::class, 'update'])->name('rekening.update');
+    Route::patch('/rekening/{rekening}', [RekeningController::class, 'update'])->name('rekening.update');
     Route::delete('/rekening/{rekening}', [RekeningController::class, 'destroy'])->name('rekening.destroy');
-
-
 });
