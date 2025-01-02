@@ -2,6 +2,7 @@
 
 namespace App\Models\Teller;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,5 +17,15 @@ class Pinjaman extends Model
     public function getRouteKeyName()
     {
         return 'token_pinjaman';
+    }
+
+    public function rekening()
+    {
+        return $this->belongsTo(Rekening::class, 'rekening_id', 'id_rekening');
+    }
+
+    public function teller()
+    {
+        return $this->belongsTo(User::class, '_teller', 'id');
     }
 }

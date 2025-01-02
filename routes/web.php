@@ -7,6 +7,7 @@ use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\auth\AccountController;
 use App\Http\Controllers\Auth\SessionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Teller\PinjamanController;
 use App\Http\Controllers\Teller\TabunganController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -104,7 +105,15 @@ Route::middleware(['auth', 'verified', 'role:teller,admin', 'aktif'])->group(fun
     Route::get('/tabungan', [TabunganController::class, 'index'])->name('tabungan.index');
     Route::post('/tabungan', [TabunganController::class, 'store'])->name('tabungan.store');
     Route::get('/tabungan/{tabungan}', [TabunganController::class, 'show'])->name('tabungan.show');
-    Route::get('/tabungan/{tabungan}/edit', [TabunganController::class, 'edit'])->name('tabungan.edit');
-    Route::patch('/tabungan/{tabungan}', [TabunganController::class, 'update'])->name('tabungan.update');
-    Route::delete('/tabungan/{tabungan}', [TabunganController::class, 'destroy'])->name('tabungan.destroy');
+    // Route::get('/tabungan/{tabungan}/edit', [TabunganController::class, 'edit'])->name('tabungan.edit');
+    // Route::patch('/tabungan/{tabungan}', [TabunganController::class, 'update'])->name('tabungan.update');
+    // Route::delete('/tabungan/{tabungan}', [TabunganController::class, 'destroy'])->name('tabungan.destroy');
+
+    // bagian pinjaman
+    Route::get('/pinjaman', [PinjamanController::class, 'index'])->name('pinjaman.index');
+    Route::post('/pinjaman', [PinjamanController::class, 'store'])->name('pinjaman.store');
+    Route::get('/pinjaman/{pinjaman}', [PinjamanController::class, 'show'])->name('pinjaman.show');
+    Route::get('/pinjaman/{pinjaman}/edit', [PinjamanController::class, 'edit'])->name('pinjaman.edit');
+    Route::patch('/pinjaman/{pinjaman}', [PinjamanController::class, 'update'])->name('pinjaman.update');
+    Route::delete('/pinjaman/{pinjaman}', [PinjamanController::class, 'destroy'])->name('pinjaman.destroy');
 });
