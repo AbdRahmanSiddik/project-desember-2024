@@ -90,7 +90,7 @@ Route::middleware(['auth','verified','role:admin,operator', 'aktif'])->group(fun
 
 });
 
-Route::middleware(['auth', 'verified', 'role:teller', 'aktif'])->group(function(){
+Route::middleware(['auth', 'verified', 'role:teller,admin', 'aktif'])->group(function(){
     // bagian rekening
     Route::get('/rekening', [RekeningController::class, 'index'])->name('rekening.index');
     Route::get('/rekening/create', [RekeningController::class, 'create'])->name('rekening.create');

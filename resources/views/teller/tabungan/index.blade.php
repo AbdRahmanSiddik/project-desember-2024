@@ -153,8 +153,8 @@
                     <th>Nama</th>
                     <th>Nominal</th>
                     <th>Jenis</th>
-                    <th>CS</th>
                     @if (auth()->user()->role != 'teller')
+                    <th>CS</th>
                       <th>Di kantor</th>
                     @endif
                     <th class="text-start">Action</th>
@@ -177,11 +177,11 @@
                         <div class="badge {{ $item->jenis == 'masuk' ? 'badge-success' : 'badge-warning' }}">
                           {{ $item->jenis }}</div>
                       </td>
+                      @if (auth()->user()->role != 'teller')
                       <td>
                         <p>{{ $item->teller->name }}</p>
                         <small>{{ $item->teller->role }}</small>
                       </td>
-                      @if (auth()->user()->role != 'teller')
                         <td>
                           <p>{{ $item->teller->profile->nama_profile }}</p>
                         </td>
@@ -190,35 +190,9 @@
                         <div class="d-flex justify-content-start gap-2">
                           <a href="{{ route('tabungan.show', $item->token_tabungan) }}"
                             class="btn btn-primary shadow btn-xs sharp"><i class="fas fa-pencil-alt"></i></a>
-                          <button type="button" class="btn btn-danger shadow btn-xs sharp" data-bs-toggle="modal"
-                            data-bs-target="#basicModal{{ $item->token_tabungan }}"><i
-                              class="fas fa-trash-alt"></i></button>
                         </div>
                       </td>
                     </tr>
-
-                    <!-- Modal delete -->
-                    <div class="modal fade" id="basicModal{{ $item->token_tabungan }}">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title">Hapus {{ $item->token_tabungan }}</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal">
-                            </button>
-                          </div>
-                          <div class="modal-body">Modal body text goes here.</div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-danger light"
-                              data-bs-dismiss="modal">Close</button>
-                            <form action="{{ route('rekening.destroy', $item->token_tabungan) }}" method="POST">
-                              @csrf
-                              @method('DELETE')
-                              <button type="submit" class="btn btn-primary">Save changes</button>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                   @endforeach
                 </tbody>
               </table>
