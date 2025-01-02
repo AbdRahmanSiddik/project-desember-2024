@@ -34,6 +34,19 @@ class TabunganController extends Controller
         $deskripsi = $request->deskripsi;
         $rekening_id = Rekening::where('no_rekening', $request->rekening_id)->first()->id_rekening;
 
+        if ($jenis == 'keluar') {
+            $saldoMasuk = Tabungan::where('rekening_id', $rekening_id)
+                                  ->where('jenis', 'masuk')
+                                  ->sum('jumlah');
+            $saldoKeluar = Tabungan::where('rekening_id', $rekening_id)
+                                   ->where('jenis', 'keluar')
+                                   ->sum('jumlah');
+            $saldo = $saldoMasuk - $saldoKeluar;
+            if ($jumlah > $saldo) {
+                return redirect()->back()->with('error', 'Saldo tidak mencukupi.');
+            }
+        }
+
         $data = [
             'token_tabungan' => $token,
             'rekening_id' => $rekening_id,
@@ -50,7 +63,14 @@ class TabunganController extends Controller
 
     public function show(Tabungan $tabungan)
     {
-        return view('teller.tabungan.show', compact('tabungan'));
+        $saldoMasuk = Tabungan::where('rekening_id', $tabungan->rekening_id)
+                              ->where('jenis', 'masuk')
+                              ->sum('jumlah');
+        $saldoKeluar = Tabungan::where('rekening_id', $tabungan->rekening_id)
+                               ->where('jenis', 'keluar')
+                               ->sum('jumlah');
+        $saldo = $saldoMasuk - $saldoKeluar;
+        return view('teller.tabungan.show', compact('tabungan', 'saldo'));
     }
 
     public function edit(Tabungan $tabungan)

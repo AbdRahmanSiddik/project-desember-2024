@@ -10,12 +10,12 @@
           <div class="card-header">
             <h4 class="card-title">Histori Tabungan</h4>
             <div class="btn-group">
-              <button type="button" class="btn btn-warning">Tarik Tunai</button>
+              <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#tarikTunai">Tarik Tunai</button>
               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalId">Simpan
                 Tunai</button>
             </div>
 
-            <!-- Modal -->
+            <!-- Modal simpanan -->
             <div class="modal fade bd-example-modal-lg" id="modalId" tabindex="-1" role="dialog"
               aria-labelledby="modalTitleId" aria-hidden="true">
               <div class="modal-dialog modal-lg" role="document">
@@ -58,6 +58,69 @@
                           </div>
                           <div class="mb-3">
                             <img src="" id="imageKtp" alt="Ktp tidak ditemukan" class="img-fluid">
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="mb-3">
+                            <label for="" class="form-label">Deskripsi</label>
+                            <textarea class="form-control" name="deskripsi" id="deskripsi" rows="3"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                      </button>
+                      <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <!-- Modal penarikan -->
+            <div class="modal fade bd-example-modal-lg" id="tarikTunai" tabindex="-1" role="dialog"
+              aria-labelledby="modalTitleId" aria-hidden="true">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitleId">
+                      Tarik Tunai
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <form action="{{ route('tabungan.store') }}" method="post" class="needs-validation" novalidate>
+                    @csrf
+                    <div class="modal-body">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="mb-3">
+                                <label for="rekening_ids" class="form-label required">No Rekening</label>
+                                <input type="text" class="form-control" name="rekening_id" id="rekening_ids" required
+                                  placeholder="masukkan No Rekening(10)" />
+                              </div>
+                            </div>
+                            <input type="text" class="form-control" name="jenis" id="jenis" value="keluar"
+                              hidden />
+                            <div class="col-md-12">
+                              <div class="mb-3">
+                                <label for="jumlah" class="form-label required">Nominal</label>
+                                <input type="number" inputmode="numeric" class="form-control" name="jumlah"
+                                  id="jumlah" required placeholder="min: 10000" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <label for="ktps" class="form-label required">KTP</label>
+                            <input type="number" inputmode="numeric" class="form-control" name="ktp" id="ktps"
+                              placeholder="ktp tidak ditemukan" value="" disabled />
+                          </div>
+                          <div class="mb-3">
+                            <img src="" id="imageKtps" alt="Ktp tidak ditemukan" class="img-fluid">
                           </div>
                         </div>
                         <div class="col-md-12">
@@ -125,7 +188,7 @@
                       @endif
                       <td class="text-start">
                         <div class="d-flex justify-content-start gap-2">
-                          <a href="{{ route('rekening.edit', $item->token_tabungan) }}"
+                          <a href="{{ route('tabungan.show', $item->token_tabungan) }}"
                             class="btn btn-primary shadow btn-xs sharp"><i class="fas fa-pencil-alt"></i></a>
                           <button type="button" class="btn btn-danger shadow btn-xs sharp" data-bs-toggle="modal"
                             data-bs-target="#basicModal{{ $item->token_tabungan }}"><i
@@ -177,6 +240,22 @@
             success: function(data) {
               $('#ktp').val(data.ktp);
               $('#imageKtp').attr('src', `{{ route('ktp', '') }}/${data.foto_ktp}`);
+            },
+            error: function(error) {
+              console.error('Error:', error);
+            }
+          });
+        }
+      });
+      $('#rekening_ids').on('input', function() {
+        const noRekening = $(this).val();
+        if (noRekening.length === 10) {
+          $.ajax({
+            url: `{{ route('rekening.api', '') }}/${noRekening}`,
+            method: 'GET',
+            success: function(data) {
+              $('#ktps').val(data.ktp);
+              $('#imageKtps').attr('src', `{{ route('ktp', '') }}/${data.foto_ktp}`);
             },
             error: function(error) {
               console.error('Error:', error);

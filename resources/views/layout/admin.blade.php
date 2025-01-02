@@ -53,6 +53,23 @@
     input[type=number] {
       -moz-appearance: textfield;
     }
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+        .print-container, .print-container * {
+            visibility: visible;
+        }
+        .print-container {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .no-print {
+            display: none;
+        }
+    }
   </style>
 
 </head>

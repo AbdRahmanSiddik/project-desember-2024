@@ -76,7 +76,7 @@
     <div class="d-grid px-4 mt-3 text-center">
         <form action="{{ route('logout') }}" method="POST">
             @csrf
-            <button class="btn btn-primary px-5">Logout</button>
+            <button class="btn btn-primary px-5 nav-text">Logout</button>
         </form>
     </div>
 

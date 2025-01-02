@@ -32,9 +32,9 @@ Route::middleware('auth')->group(function(){
     })->name('verification.notice');
 
     Route::post('email/resend/{token}', [SessionController::class, 'resendEmail'])->name('verification.resend');
-    Route::get('email/verify/{token}', [SessionController::class, 'verifyEmail'])->name('verification.verify');
 
 });
+Route::get('email/verify/{token}', [SessionController::class, 'verifyEmail'])->name('verification.verify');
 
 // bagian logout dan dashboard
 Route::middleware(['auth','verified', 'role:admin,operator,teller,anggota', 'aktif'])->group(function(){

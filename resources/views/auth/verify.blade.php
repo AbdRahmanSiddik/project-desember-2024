@@ -31,7 +31,7 @@
         <h1>Verifikasi Alamat Email Anda</h1>
         <p>Hai {{ $user->name }},</p>
         <p>Terima kasih telah mendaftar. Silakan klik tautan di bawah ini untuk memverifikasi alamat email Anda:</p>
-        <a href="{{ route('verification.verify', $user->token_user) }}">Verifikasi Email</a>
+        <a href="{{ $verificationUrl }}">Verifikasi Email</a>
         <p>Jika Anda tidak membuat akun, tidak ada tindakan lebih lanjut yang diperlukan.</p>
         <p>Salam,<br>{{ config('app.name') }}</p>
     </div>

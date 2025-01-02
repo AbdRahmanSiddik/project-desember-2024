@@ -96,7 +96,7 @@
                       onchange="previewImage(event, 'previewLogo')">
                     <small class="form-text text-muted">Upload foto KTP.</small>
                     <img id="previewLogo" src="" alt="Preview Logo" class="img-thumbnail mt-2"
-                      style="display: none; max-width: 100%; height: auto;">
+                      style="display: none; max-width: 100%; height: auto;" width="100%">
                   </div>
                 </div>
               </div>
