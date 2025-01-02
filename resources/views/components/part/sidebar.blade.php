@@ -27,13 +27,13 @@
           </a>
         </li>
         <li>
-          <a href="/tabungan" aria-expanded="false">
+          <a href="/pinjaman" aria-expanded="false">
             <i class="flaticon-381-network"></i>
             <span class="nav-text">Pinjaman</span>
           </a>
         </li>
         <li>
-          <a href="/tabungan" aria-expanded="false">
+          <a href="/pegadaian" aria-expanded="false">
             <i class="flaticon-381-television"></i>
             <span class="nav-text">Gadai</span>
           </a>
@@ -66,7 +66,7 @@
         <h4 class="fw-bold nav-text">Settings</h4>
       </li>
       <li>
-        <a href="/tabungan" aria-expanded="false">
+        <a href="/settings" aria-expanded="false">
           <i class="fa-regular fa-gear fw-bold"></i>
           <span class="nav-text">Setting</span>
         </a>

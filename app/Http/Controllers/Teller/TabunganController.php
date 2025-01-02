@@ -3,62 +3,66 @@
 namespace App\Http\Controllers\Teller;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Teller\TabunganRequest;
+use App\Models\Teller\Rekening;
 use App\Models\Teller\Tabungan;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class TabunganController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        if (auth()->user()->role == 'teller') {
+            $tabungans = Tabungan::where('_teller', auth()->user()->id)
+                                   ->with(['rekening', 'teller'])
+                                   ->orderBy('created_at', 'desc')
+                                   ->get();
+        } else {
+            $tabungans = Tabungan::with(['rekening', 'teller'])->orderBy('created_at', 'desc')->get();
+        }
+
+        return view('teller.tabungan.index', compact('tabungans'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(TabunganRequest $request)
     {
-        //
+        $token = Str::random(32);
+        $jenis = $request->jenis;
+        $jumlah = $request->jumlah;
+        $deskripsi = $request->deskripsi;
+        $rekening_id = Rekening::where('no_rekening', $request->rekening_id)->first()->id_rekening;
+
+        $data = [
+            'token_tabungan' => $token,
+            'rekening_id' => $rekening_id,
+            'jumlah' => $jumlah,
+            'jenis' => $jenis,
+            'deskripsi' => $deskripsi,
+            '_teller' => auth()->user()->id,
+        ];
+
+        Tabungan::create($data);
+
+        return redirect()->route('tabungan.show', $token)->with('success', 'Tabungan berhasil ditambahkan.');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Tabungan $tabungan)
     {
-        //
+        return view('teller.tabungan.show', compact('tabungan'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Tabungan $tabungan)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Tabungan $tabungan)
+    public function update(TabunganRequest $request, Tabungan $tabungan)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Tabungan $tabungan)
     {
         //

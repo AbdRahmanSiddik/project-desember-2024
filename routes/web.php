@@ -7,6 +7,7 @@ use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\auth\AccountController;
 use App\Http\Controllers\Auth\SessionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Teller\TabunganController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,7 @@ Route::middleware(['auth','verified', 'role:admin,operator,teller,anggota', 'akt
     Route::post('/logout', [SessionController::class, 'logout'])->name('logout');
     // ktp akses
     Route::get('/ktp/{ktp}', [RekeningController::class, 'ktp'])->name('ktp');
+    Route::get('/rekening/api/{rekening}', [RekeningController::class, 'rekeningAPI'])->name('rekening.api');
 });
 
 Route::middleware(['auth', 'verified', 'role:anggota', 'aktif'])->group(function(){
@@ -97,4 +99,12 @@ Route::middleware(['auth', 'verified', 'role:teller', 'aktif'])->group(function(
     Route::get('/rekening/{rekening}/edit', [RekeningController::class, 'edit'])->name('rekening.edit');
     Route::patch('/rekening/{rekening}', [RekeningController::class, 'update'])->name('rekening.update');
     Route::delete('/rekening/{rekening}', [RekeningController::class, 'destroy'])->name('rekening.destroy');
+
+    // bagian tabungan
+    Route::get('/tabungan', [TabunganController::class, 'index'])->name('tabungan.index');
+    Route::post('/tabungan', [TabunganController::class, 'store'])->name('tabungan.store');
+    Route::get('/tabungan/{tabungan}', [TabunganController::class, 'show'])->name('tabungan.show');
+    Route::get('/tabungan/{tabungan}/edit', [TabunganController::class, 'edit'])->name('tabungan.edit');
+    Route::patch('/tabungan/{tabungan}', [TabunganController::class, 'update'])->name('tabungan.update');
+    Route::delete('/tabungan/{tabungan}', [TabunganController::class, 'destroy'])->name('tabungan.destroy');
 });

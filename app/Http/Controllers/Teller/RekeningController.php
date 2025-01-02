@@ -144,4 +144,17 @@ class RekeningController extends Controller
             'Content-Disposition' => 'inline' // Untuk menampilkan langsung di browser
         ]);
     }
+
+    public function rekeningAPI($rekening)
+    {
+        $rekening = Rekening::where('no_rekening', $rekening)->first();
+        if ($rekening) {
+            return response()->json([
+                'ktp' => $rekening->ktp,
+                'foto_ktp' => $rekening->foto_ktp
+            ]);
+        } else {
+            return response()->json(['error' => 'Rekening not found'], 404);
+        }
+    }
 }
